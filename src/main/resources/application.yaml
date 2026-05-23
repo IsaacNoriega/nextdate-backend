@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nextdate_db
+    username: nextdate_admin
+    password: nextdate_secure_pass
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    # 'validate' comprueba que tu código coincida con la base de datos sin alterarla accidentalmente
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  graphql:
+    graphiql:
+      enabled: true
+    cors:
+      allowed-origins: "https://studio.apollographql.com"

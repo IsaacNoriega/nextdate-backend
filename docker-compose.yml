@@ -1,0 +1,22 @@
+## Version de docker
+version: '3.8' 
+
+## Definimos los servicios 
+services:
+  ## Servicio de base de datos
+  nextdate-db:
+    image: postgis/postgis:16-3.4
+    container_name: nextdate_postgres_container
+    environment:
+      - POSTGRES_USER=nextdate_admin
+      - POSTGRES_PASSWORD=nextdate_secure_pass
+      - POSTGRES_DB=nextdate_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - nextdate_postgres_data:/var/lib/postgresql/data
+    restart: always
+
+## Almacenamiento de db
+volumes:
+  nextdate_postgres_data: 
