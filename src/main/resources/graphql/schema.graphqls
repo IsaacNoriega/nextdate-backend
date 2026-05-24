@@ -4,6 +4,17 @@ type Query {
 
 type Mutation {
     registerUser(input: RegisterUserInput!) : User
+    login(input: LoginInput!) : LoginResult
+}
+
+input LoginInput {
+    email: String!
+    password: String!
+}
+
+type LoginResult {
+    user: User!
+    token: String!
 }
 
 input RegisterUserInput {
