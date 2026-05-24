@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class PingController {
 
-    @QueryMapping
-    public String ping() {
-        return "pong";
-    }
+  @QueryMapping
+  public String ping() {
+    return "pong";
+  }
 }
