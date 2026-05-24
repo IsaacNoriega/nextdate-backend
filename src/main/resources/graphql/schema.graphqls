@@ -1,3 +1,18 @@
 type Query {
     ping: String!
 }
+
+type Mutation {
+    registerUser(input: RegisterUserInput!) : User
+}
+
+input RegisterUserInput {
+    email: String!
+    password: String!
+}
+
+type User {
+    id: ID!
+    email: String!
+    active: Boolean!
+}
