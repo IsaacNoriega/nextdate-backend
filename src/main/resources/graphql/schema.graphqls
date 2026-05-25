@@ -5,6 +5,13 @@ type Query {
 type Mutation {
     registerUser(input: RegisterUserInput!) : User
     login(input: LoginInput!) : LoginResult
+    requestPasswordReset(email: String!) : Boolean!
+    resetPassword(input: ResetPasswordInput!) : Boolean!
+}
+
+input ResetPasswordInput {
+    token: String!
+    newPassword: String!
 }
 
 input LoginInput {

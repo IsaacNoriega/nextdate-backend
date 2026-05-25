@@ -1,4 +1,4 @@
-package com.nextdate.backend.auth.application;
+package com.nextdate.backend.auth.application.register;
 
 import com.nextdate.backend.auth.domain.User; // Entidad
 import com.nextdate.backend.auth.domain.UserRepository; // Repositorio (Interfaz)

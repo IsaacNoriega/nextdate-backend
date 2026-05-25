@@ -8,5 +8,7 @@ public interface UserRepository {
 
   Optional<User> findByEmail(String email);
 
+  Optional<User> findByResetPasswordToken(String token);
+
   User save(User user);
 }

@@ -1,4 +1,4 @@
-package com.nextdate.backend.auth.infrastructure;
+package com.nextdate.backend.auth.infrastructure.persistence;
 
 import com.nextdate.backend.auth.domain.User;
 import com.nextdate.backend.auth.domain.UserRepository;
@@ -30,6 +30,11 @@ public class UserRepositoryAdapter implements UserRepository {
   }
 
   @Override
+  public Optional<User> findByResetPasswordToken(String token) {
+    return jpaRepository.findByResetPasswordToken(token).map(this::toDomain);
+  }
+
+  @Override
   public User save(User user) {
     // Mapea y guarda el usuario en la base de datos
     UserJpaEntity jpaEntity = toJpa(user);
@@ -44,6 +49,8 @@ public class UserRepositoryAdapter implements UserRepository {
         .email(entity.getEmail())
         .passwordHash(entity.getPasswordHash())
         .active(entity.isActive())
+        .resetPasswordToken(entity.getResetPasswordToken())
+        .resetPasswordExpires(entity.getResetPasswordExpires())
         .build();
   }
 
@@ -54,6 +61,8 @@ public class UserRepositoryAdapter implements UserRepository {
         .email(domain.getEmail())
         .passwordHash(domain.getPasswordHash())
         .active(domain.isActive())
+        .resetPasswordToken(domain.getResetPasswordToken())
+        .resetPasswordExpires(domain.getResetPasswordExpires())
         .build();
   }
 }
