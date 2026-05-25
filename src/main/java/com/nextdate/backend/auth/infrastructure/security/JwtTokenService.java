@@ -1,8 +1,8 @@
-package com.nextdate.backend.auth.infrastructure;
+package com.nextdate.backend.auth.infrastructure.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.nextdate.backend.auth.application.TokenService;
+import com.nextdate.backend.auth.application.login.TokenService;
 import com.nextdate.backend.auth.domain.User;
 import java.util.Date;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.nextdate.backend.auth.application;
+package com.nextdate.backend.auth.application.login;
 
 import com.nextdate.backend.auth.domain.User;
 

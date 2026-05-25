@@ -1,4 +1,4 @@
-package com.nextdate.backend.auth.infrastructure;
+package com.nextdate.backend.auth.infrastructure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
