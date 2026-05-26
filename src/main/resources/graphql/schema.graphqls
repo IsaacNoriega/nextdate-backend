@@ -2,6 +2,8 @@ type Query {
     ping: String!
     profileByUserId(userId: ID!) : Profile
     nearbyProfiles(longitude: Float!, latitude: Float!, radiusInKm: Float!) : [Profile!]!
+    placeById(id: ID!) : Place
+    nearbyPlaces(longitude: Float!, latitude: Float!, radiusInKm: Float! , category: PlaceCategory) : [Place!]!
 }
 
 type Mutation {
@@ -11,6 +13,8 @@ type Mutation {
     resetPassword(input: ResetPasswordInput!) : Boolean!
     createProfile(input: CreateProfileInput!) : Profile!
     updateProfile(input: UpdateProfileInput!) : Profile!
+    createPlace(input: CreatePlaceInput!) : Place!
+    updatePlace(input: UpdatePlaceInput!) : Place!
 }
 
 input ResetPasswordInput {
@@ -79,4 +83,56 @@ enum Gender {
     MALE
     FEMALE
     OTHER
+}
+
+enum PlaceCategory {
+    FOOD_DRINK
+    CULTURE
+    NATURE
+    ENTERTAINMENT
+    SHOPPING
+    SPORTS
+    OTHER
+}
+
+enum PriceRange {
+    CHEAP
+    MODERATE
+    EXPENSIVE
+    LUXURY
+}
+
+type Place {
+    id: ID!
+    name: String!
+    description: String
+    category: PlaceCategory!
+    priceRange: PriceRange!
+    address: String
+    latitude: Float!
+    longitude: Float!
+    active: Boolean!
+    createdAt: String!
+}
+
+input CreatePlaceInput {
+    name: String!
+    description: String
+    category: PlaceCategory!
+    priceRange: PriceRange!
+    address: String
+    latitude: Float!
+    longitude: Float!
+}
+
+input UpdatePlaceInput {
+    id: ID!
+    name: String
+    description: String
+    category: PlaceCategory
+    priceRange: PriceRange
+    address: String
+    latitude: Float
+    longitude: Float
+    active: Boolean
 }
