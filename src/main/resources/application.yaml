@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/nextdate_db
-    username: nextdate_admin
-    password: nextdate_secure_pass
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/nextdate_db}
+    username: ${DB_USERNAME:nextdate_admin}
+    password: ${DB_PASSWORD:nextdate_secure_pass}
     driver-class-name: org.postgresql.Driver
   
   jpa:
