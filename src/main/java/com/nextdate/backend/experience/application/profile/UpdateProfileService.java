@@ -1,7 +1,11 @@
 package com.nextdate.backend.experience.application.profile;
 
+import com.nextdate.backend.experience.domain.DietaryPreference;
+import com.nextdate.backend.experience.domain.PlaceCategory;
+import com.nextdate.backend.experience.domain.PriceRange;
 import com.nextdate.backend.experience.domain.Profile;
 import com.nextdate.backend.experience.domain.ProfileRepository;
+import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
@@ -36,6 +40,19 @@ public class UpdateProfileService implements UpdateProfileUseCase {
     Point location =
         geometryFactory.createPoint(new Coordinate(command.longitude(), command.latitude()));
 
+    DietaryPreference dietary =
+        command.dietaryPreference() != null
+            ? command.dietaryPreference()
+            : profile.getDietaryPreference();
+
+    PriceRange price =
+        command.preferredPriceRange() != null
+            ? command.preferredPriceRange()
+            : profile.getPreferredPriceRange();
+
+    Set<PlaceCategory> interests =
+        command.interests() != null ? command.interests() : profile.getInterests();
+
     // Crear el perfil actualizado
     Profile updatedProfile =
         Profile.builder()
@@ -46,6 +63,9 @@ public class UpdateProfileService implements UpdateProfileUseCase {
             .gender(command.gender())
             .bio(command.bio())
             .location(location)
+            .dietaryPreference(dietary)
+            .preferredPriceRange(price)
+            .interests(interests)
             .active(profile.getActive())
             .build();
 

@@ -54,6 +54,9 @@ type Profile {
     latitude: Float!
     longitude: Float!
     active: Boolean!
+    dietaryPreference: DietaryPreference!
+    preferredPriceRange: PriceRange!
+    interests: [PlaceCategory!]!
 }
 
 
@@ -66,6 +69,9 @@ input CreateProfileInput {
     bio: String
     latitude: Float!
     longitude: Float!
+    dietaryPreference: DietaryPreference!
+    preferredPriceRange: PriceRange!
+    interests: [PlaceCategory!]!
 }
 
 input UpdateProfileInput {
@@ -77,6 +83,9 @@ input UpdateProfileInput {
     bio: String
     latitude: Float
     longitude: Float
+    dietaryPreference: DietaryPreference
+    preferredPriceRange: PriceRange
+    interests: [PlaceCategory!]
 }
 
 enum Gender {
@@ -135,4 +144,14 @@ input UpdatePlaceInput {
     latitude: Float
     longitude: Float
     active: Boolean
+}
+
+enum DietaryPreference {
+    NONE
+    VEGETARIAN
+    VEGAN
+    GLUTEN_FREE
+    DAIRY_FREE
+    PESCATARIAN
+    OTHER
 }

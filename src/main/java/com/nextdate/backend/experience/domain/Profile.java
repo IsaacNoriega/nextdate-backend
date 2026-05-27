@@ -1,6 +1,7 @@
 package com.nextdate.backend.experience.domain;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +21,10 @@ public class Profile { // DTO para manejo de datos
   private final Point location;
   private final Boolean active;
 
+  private final DietaryPreference dietaryPreference;
+  private final PriceRange preferredPriceRange;
+  private final Set<PlaceCategory> interests;
+
   public double getLatitude() {
     return location != null ? location.getY() : 0.0;
   }
@@ -38,6 +43,9 @@ public class Profile { // DTO para manejo de datos
         .bio(this.bio)
         .location(this.location)
         .active(false)
+        .dietaryPreference(this.dietaryPreference)
+        .preferredPriceRange(this.preferredPriceRange)
+        .interests(this.interests)
         .build();
   }
 }

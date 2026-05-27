@@ -5,12 +5,17 @@ import com.nextdate.backend.experience.application.profile.CreateProfileUseCase.
 import com.nextdate.backend.experience.application.profile.GetNearbyProfilesUseCase;
 import com.nextdate.backend.experience.application.profile.UpdateProfileUseCase;
 import com.nextdate.backend.experience.application.profile.UpdateProfileUseCase.UpdateCommand;
+import com.nextdate.backend.experience.domain.DietaryPreference;
 import com.nextdate.backend.experience.domain.Gender;
+import com.nextdate.backend.experience.domain.PlaceCategory;
+import com.nextdate.backend.experience.domain.PriceRange;
 import com.nextdate.backend.experience.domain.Profile;
 import com.nextdate.backend.experience.domain.ProfileRepository;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -51,6 +56,24 @@ public class ProfileGraphQLController {
   // CREATE PROFILE
   @MutationMapping
   public Profile createProfile(@Argument CreateProfileInput input) {
+
+    DietaryPreference dietary =
+        input.dietaryPreference() != null
+            ? DietaryPreference.valueOf(input.dietaryPreference().toUpperCase())
+            : DietaryPreference.NONE;
+
+    PriceRange price =
+        input.preferredPriceRange() != null
+            ? PriceRange.valueOf(input.preferredPriceRange().toUpperCase())
+            : PriceRange.MODERATE;
+
+    Set<PlaceCategory> interests =
+        input.interests() != null
+            ? input.interests().stream()
+                .map(c -> PlaceCategory.valueOf(c.toUpperCase()))
+                .collect(Collectors.toSet())
+            : Set.of();
+
     CreateCommand command =
         new CreateCommand(
             input.userId(),
@@ -59,13 +82,34 @@ public class ProfileGraphQLController {
             Gender.valueOf(input.gender().toUpperCase()),
             input.bio(),
             input.latitude(),
-            input.longitude());
+            input.longitude(),
+            dietary,
+            price,
+            interests);
     return createProfileUseCase.create(command);
   }
 
   // UPDATE PROFILE
   @MutationMapping
   public Profile updateProfile(@Argument UpdateProfileInput input) {
+
+    DietaryPreference dietary =
+        input.dietaryPreference() != null
+            ? DietaryPreference.valueOf(input.dietaryPreference().toUpperCase())
+            : DietaryPreference.NONE;
+
+    PriceRange price =
+        input.preferredPriceRange() != null
+            ? PriceRange.valueOf(input.preferredPriceRange().toUpperCase())
+            : PriceRange.MODERATE;
+
+    Set<PlaceCategory> interests =
+        input.interests() != null
+            ? input.interests().stream()
+                .map(c -> PlaceCategory.valueOf(c.toUpperCase()))
+                .collect(Collectors.toSet())
+            : Set.of();
+
     UpdateCommand command =
         new UpdateCommand(
             input.id(),
@@ -75,7 +119,10 @@ public class ProfileGraphQLController {
             Gender.valueOf(input.gender().toUpperCase()),
             input.bio(),
             input.latitude(),
-            input.longitude());
+            input.longitude(),
+            dietary,
+            price,
+            interests);
     return updateProfileUseCase.update(command);
   }
 
@@ -86,7 +133,10 @@ public class ProfileGraphQLController {
       String gender,
       String bio,
       double latitude,
-      double longitude) {}
+      double longitude,
+      String dietaryPreference,
+      String preferredPriceRange,
+      List<String> interests) {}
 
   public record UpdateProfileInput(
       UUID id,
@@ -96,5 +146,8 @@ public class ProfileGraphQLController {
       String gender,
       String bio,
       double latitude,
-      double longitude) {}
+      double longitude,
+      String dietaryPreference,
+      String preferredPriceRange,
+      List<String> interests) {}
 }
