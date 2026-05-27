@@ -57,6 +57,9 @@ public class ProfileRepositoryAdapter implements ProfileRepository {
         .bio(entity.getBio())
         .location(entity.getLocation())
         .active(entity.getActive())
+        .dietaryPreference(entity.getDietaryPreference())
+        .preferredPriceRange(entity.getPreferredPriceRange())
+        .interests(entity.getInterests())
         .build();
   }
 
@@ -71,6 +74,9 @@ public class ProfileRepositoryAdapter implements ProfileRepository {
         .bio(profile.getBio())
         .location(profile.getLocation())
         .active(profile.getActive())
+        .dietaryPreference(profile.getDietaryPreference())
+        .preferredPriceRange(profile.getPreferredPriceRange())
+        .interests(profile.getInterests())
         .build();
   }
 }
