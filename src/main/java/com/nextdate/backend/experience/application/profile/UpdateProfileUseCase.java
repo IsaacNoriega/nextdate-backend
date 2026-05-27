@@ -20,8 +20,8 @@ public interface UpdateProfileUseCase {
       LocalDate birthdate,
       Gender gender,
       String bio,
-      double latitude,
-      double longitude,
+      Double latitude,
+      Double longitude,
       DietaryPreference dietaryPreference,
       PriceRange preferredPriceRange,
       Set<PlaceCategory> interests) {}

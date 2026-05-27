@@ -1,10 +1,12 @@
 package com.nextdate.backend.experience.application.profile;
 
 import com.nextdate.backend.experience.domain.DietaryPreference;
+import com.nextdate.backend.experience.domain.Gender;
 import com.nextdate.backend.experience.domain.PlaceCategory;
 import com.nextdate.backend.experience.domain.PriceRange;
 import com.nextdate.backend.experience.domain.Profile;
 import com.nextdate.backend.experience.domain.ProfileRepository;
+import java.time.LocalDate;
 import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -36,9 +38,17 @@ public class UpdateProfileService implements UpdateProfileUseCase {
     if (!profile.getUserId().equals(command.userId())) {
       throw new IllegalArgumentException("No tienes permiso para actualizar este perfil");
     }
-    // Crear el nuevo punto
+    // Mapear campos con fallback a los valores existentes si vienen nulos (actualización parcial)
+    String username = command.username() != null ? command.username() : profile.getUsername();
+    LocalDate birthdate =
+        command.birthdate() != null ? command.birthdate() : profile.getBirthdate();
+    Gender gender = command.gender() != null ? command.gender() : profile.getGender();
+    String bio = command.bio() != null ? command.bio() : profile.getBio();
+
     Point location =
-        geometryFactory.createPoint(new Coordinate(command.longitude(), command.latitude()));
+        (command.longitude() != null && command.latitude() != null)
+            ? geometryFactory.createPoint(new Coordinate(command.longitude(), command.latitude()))
+            : profile.getLocation();
 
     DietaryPreference dietary =
         command.dietaryPreference() != null
@@ -58,10 +68,10 @@ public class UpdateProfileService implements UpdateProfileUseCase {
         Profile.builder()
             .id(profile.getId())
             .userId(profile.getUserId())
-            .username(command.username())
-            .birthdate(command.birthdate())
-            .gender(command.gender())
-            .bio(command.bio())
+            .username(username)
+            .birthdate(birthdate)
+            .gender(gender)
+            .bio(bio)
             .location(location)
             .dietaryPreference(dietary)
             .preferredPriceRange(price)

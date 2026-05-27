@@ -96,27 +96,30 @@ public class ProfileGraphQLController {
     DietaryPreference dietary =
         input.dietaryPreference() != null
             ? DietaryPreference.valueOf(input.dietaryPreference().toUpperCase())
-            : DietaryPreference.NONE;
+            : null;
 
     PriceRange price =
         input.preferredPriceRange() != null
             ? PriceRange.valueOf(input.preferredPriceRange().toUpperCase())
-            : PriceRange.MODERATE;
+            : null;
 
     Set<PlaceCategory> interests =
         input.interests() != null
             ? input.interests().stream()
                 .map(c -> PlaceCategory.valueOf(c.toUpperCase()))
                 .collect(Collectors.toSet())
-            : Set.of();
+            : null;
+
+    LocalDate birthdate = input.birthdate() != null ? LocalDate.parse(input.birthdate()) : null;
+    Gender gender = input.gender() != null ? Gender.valueOf(input.gender().toUpperCase()) : null;
 
     UpdateCommand command =
         new UpdateCommand(
             input.id(),
             input.userId(),
             input.username(),
-            LocalDate.parse(input.birthdate()),
-            Gender.valueOf(input.gender().toUpperCase()),
+            birthdate,
+            gender,
             input.bio(),
             input.latitude(),
             input.longitude(),
@@ -145,8 +148,8 @@ public class ProfileGraphQLController {
       String birthdate,
       String gender,
       String bio,
-      double latitude,
-      double longitude,
+      Double latitude,
+      Double longitude,
       String dietaryPreference,
       String preferredPriceRange,
       List<String> interests) {}
