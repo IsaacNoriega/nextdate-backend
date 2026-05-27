@@ -4,6 +4,8 @@ type Query {
     nearbyProfiles(longitude: Float!, latitude: Float!, radiusInKm: Float!) : [Profile!]!
     placeById(id: ID!) : Place
     nearbyPlaces(longitude: Float!, latitude: Float!, radiusInKm: Float! , category: PlaceCategory) : [Place!]!
+    itineraryById(id: ID!) : Itinerary
+    itinerariesByUserId(userId: ID!) : [Itinerary!]!
 }
 
 type Mutation {
@@ -15,6 +17,7 @@ type Mutation {
     updateProfile(input: UpdateProfileInput!) : Profile!
     createPlace(input: CreatePlaceInput!) : Place!
     updatePlace(input: UpdatePlaceInput!) : Place!
+    createItinerary(input: CreateItineraryInput!) : Itinerary!
 }
 
 input ResetPasswordInput {
@@ -154,4 +157,50 @@ enum DietaryPreference {
     DAIRY_FREE
     PESCATARIAN
     OTHER
+}
+
+type Itinerary {
+    id: ID!
+    userId: ID!
+    title: String!
+    description: String
+    totalCost: Float!
+    active: Boolean!
+    createdAt: String!
+    items: [ItineraryItem!]!
+}
+
+type ItineraryItem {
+    id: ID!
+    place: Place!
+    sequenceOrder: Int!
+    durationInMinutes: Int!
+    notes: String
+    transportToNext: TransportType!
+    transitTimeToNext: Int!
+}
+
+enum TransportType {
+    WALKING
+    DRIVING
+    TRANSIT
+    CYCLING
+    NONE
+}
+
+input CreateItineraryInput {
+    userId: ID!
+    title: String!
+    description: String
+    totalCost: Float!
+    items: [CreateItineraryItemInput!]!
+}
+
+input CreateItineraryItemInput {
+    placeId: ID!
+    sequenceOrder: Int!
+    durationInMinutes: Int
+    notes: String
+    transportToNext: TransportType
+    transitTimeToNext: Int
 }
