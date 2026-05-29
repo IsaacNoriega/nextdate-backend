@@ -21,6 +21,8 @@ type Mutation {
     updatePlace(input: UpdatePlaceInput!) : Place!
     createItinerary(input: CreateItineraryInput!) : Itinerary!
     shareExperience(input: ShareExperienceInput!): SharedExperience!
+    recommendItinerary(input: RecommendItineraryInput!): Itinerary!
+
 }
 
 input ResetPasswordInput {
@@ -232,3 +234,7 @@ input ShareExperienceInput {
     imageUrls: [String!]!
 }
 
+input RecommendItineraryInput {
+    userId: ID!
+    prompt: String!
+}
