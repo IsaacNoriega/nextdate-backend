@@ -19,3 +19,12 @@ spring:
       enabled: true
     cors:
       allowed-origins: "https://studio.apollographql.com"
+
+aws:
+  bedrock:
+    mock: ${AWS_BEDROCK_MOCK:true}
+    model-id: ${AWS_BEDROCK_MODEL_ID:anthropic.claude-3-haiku-20240307-v1:0}
+    region: ${AWS_REGION:us-east-1}
+  credentials:
+    access-key: ${AWS_ACCESS_KEY_ID:}
+    secret-key: ${AWS_SECRET_ACCESS_KEY:}

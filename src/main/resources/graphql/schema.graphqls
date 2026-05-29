@@ -6,6 +6,8 @@ type Query {
     nearbyPlaces(longitude: Float!, latitude: Float!, radiusInKm: Float! , category: PlaceCategory) : [Place!]!
     itineraryById(id: ID!) : Itinerary
     itinerariesByUserId(userId: ID!) : [Itinerary!]!
+    sharedExperiences: [SharedExperience!]!
+    sharedExperiencesByUserId(userId: ID!): [SharedExperience!]!
 }
 
 type Mutation {
@@ -18,6 +20,9 @@ type Mutation {
     createPlace(input: CreatePlaceInput!) : Place!
     updatePlace(input: UpdatePlaceInput!) : Place!
     createItinerary(input: CreateItineraryInput!) : Itinerary!
+    shareExperience(input: ShareExperienceInput!): SharedExperience!
+    recommendItinerary(input: RecommendItineraryInput!): Itinerary!
+
 }
 
 input ResetPasswordInput {
@@ -203,4 +208,33 @@ input CreateItineraryItemInput {
     notes: String
     transportToNext: TransportType
     transitTimeToNext: Int
+}
+
+type SharedExperience {
+    id: ID!
+    userId: ID!
+    itinerary: Itinerary!
+    title: String!
+    description: String
+    tips: String
+    actualCost: Float!
+    rating: Int!
+    imageUrls: [String!]!
+    createdAt: String!
+}
+
+input ShareExperienceInput {
+    userId: ID!
+    itineraryId: ID!
+    title: String!
+    description: String
+    tips: String
+    actualCost: Float!
+    rating: Int!
+    imageUrls: [String!]!
+}
+
+input RecommendItineraryInput {
+    userId: ID!
+    prompt: String!
 }
