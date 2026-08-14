@@ -56,62 +56,26 @@ public class ProfileGraphQLController {
   // CREATE PROFILE
   @MutationMapping
   public Profile createProfile(@Argument CreateProfileInput input) {
-
-    DietaryPreference dietary =
-        input.dietaryPreference() != null
-            ? DietaryPreference.valueOf(input.dietaryPreference().toUpperCase())
-            : DietaryPreference.NONE;
-
-    PriceRange price =
-        input.preferredPriceRange() != null
-            ? PriceRange.valueOf(input.preferredPriceRange().toUpperCase())
-            : PriceRange.MODERATE;
-
-    Set<PlaceCategory> interests =
-        input.interests() != null
-            ? input.interests().stream()
-                .map(c -> PlaceCategory.valueOf(c.toUpperCase()))
-                .collect(Collectors.toSet())
-            : Set.of();
-
     CreateCommand command =
         new CreateCommand(
             input.userId(),
             input.username(),
             LocalDate.parse(input.birthdate()),
-            Gender.valueOf(input.gender().toUpperCase()),
+            input.gender(),
             input.bio(),
             input.latitude(),
             input.longitude(),
-            dietary,
-            price,
-            interests);
+            input.dietaryPreference() != null ? input.dietaryPreference() : DietaryPreference.NONE,
+            input.preferredPriceRange() != null ? input.preferredPriceRange() : PriceRange.MODERATE,
+            input.interests() != null ? input.interests() : Set.of());
+
     return createProfileUseCase.create(command);
   }
 
   // UPDATE PROFILE
   @MutationMapping
   public Profile updateProfile(@Argument UpdateProfileInput input) {
-
-    DietaryPreference dietary =
-        input.dietaryPreference() != null
-            ? DietaryPreference.valueOf(input.dietaryPreference().toUpperCase())
-            : null;
-
-    PriceRange price =
-        input.preferredPriceRange() != null
-            ? PriceRange.valueOf(input.preferredPriceRange().toUpperCase())
-            : null;
-
-    Set<PlaceCategory> interests =
-        input.interests() != null
-            ? input.interests().stream()
-                .map(c -> PlaceCategory.valueOf(c.toUpperCase()))
-                .collect(Collectors.toSet())
-            : null;
-
     LocalDate birthdate = input.birthdate() != null ? LocalDate.parse(input.birthdate()) : null;
-    Gender gender = input.gender() != null ? Gender.valueOf(input.gender().toUpperCase()) : null;
 
     UpdateCommand command =
         new UpdateCommand(
@@ -119,13 +83,13 @@ public class ProfileGraphQLController {
             input.userId(),
             input.username(),
             birthdate,
-            gender,
+            input.gender(),
             input.bio(),
             input.latitude(),
             input.longitude(),
-            dietary,
-            price,
-            interests);
+            input.dietaryPreference(),
+            input.preferredPriceRange(),
+            input.interests());
     return updateProfileUseCase.update(command);
   }
 
@@ -133,24 +97,24 @@ public class ProfileGraphQLController {
       UUID userId,
       String username,
       String birthdate,
-      String gender,
+      Gender gender,
       String bio,
       double latitude,
       double longitude,
-      String dietaryPreference,
-      String preferredPriceRange,
-      List<String> interests) {}
+      DietaryPreference dietaryPreference,
+      PriceRange preferredPriceRange,
+      Set<PlaceCategory> interests) {}
 
   public record UpdateProfileInput(
       UUID id,
       UUID userId,
       String username,
       String birthdate,
-      String gender,
+      Gender gender,
       String bio,
       Double latitude,
       Double longitude,
-      String dietaryPreference,
-      String preferredPriceRange,
-      List<String> interests) {}
+      DietaryPreference dietaryPreference,
+      PriceRange preferredPriceRange,
+      Set<PlaceCategory> interests) {}
 }
