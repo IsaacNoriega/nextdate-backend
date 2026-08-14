@@ -7,11 +7,8 @@ import com.nextdate.backend.auth.application.recovery.ResetPasswordUseCase;
 import com.nextdate.backend.auth.application.register.RegisterUserUseCase;
 import com.nextdate.backend.auth.application.register.RegisterUserUseCase.RegisterUserCommand;
 import com.nextdate.backend.auth.domain.User;
-import graphql.GraphQLError;
 import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.GraphQlExceptionHandler;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -85,13 +82,4 @@ public class UserGraphQLController {
 
   // DTO de entrada para la mutacion de restablecimiento de contraseña
   public record ResetPasswordInput(String token, String newPassword) {}
-
-  @GraphQlExceptionHandler
-  public GraphQLError handleIllegalArgumentException(IllegalArgumentException ex) {
-
-    return GraphQLError.newError()
-        .message(ex.getMessage())
-        .errorType(ErrorType.BAD_REQUEST)
-        .build();
-  }
 }

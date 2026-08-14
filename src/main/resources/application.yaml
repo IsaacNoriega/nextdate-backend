@@ -18,7 +18,7 @@ spring:
     graphiql:
       enabled: true
     cors:
-      allowed-origins: "https://studio.apollographql.com"
+      allowed-origins: "https://studio.apollographql.com,http://localhost:8080,http://localhost:8081,http://localhost:19006,http://localhost:3000"
 
 aws:
   bedrock:
