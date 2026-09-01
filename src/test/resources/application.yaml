@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+  graphql:
+    graphiql:
+      enabled: false
+
+aws:
+  bedrock:
+    mock: true
+    model-id: anthropic.claude-3-haiku-20240307-v1:0
+    region: us-east-1
+  credentials:
+    access-key: test-access-key
+    secret-key: test-secret-key
+
+jwt:
+  secret: test_jwt_secret_with_minimum_64_characters_for_hmac512_verification_in_tests
+  expiration-ms: 3600000
