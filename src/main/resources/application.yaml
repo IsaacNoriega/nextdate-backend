@@ -28,3 +28,7 @@ aws:
   credentials:
     access-key: ${AWS_ACCESS_KEY_ID:}
     secret-key: ${AWS_SECRET_ACCESS_KEY:}
+
+jwt:
+  secret: ${JWT_SECRET:nextdate_super_secret_key_development_only_minimum_64_characters_long_for_security_compliance}
+  expiration-ms: ${JWT_EXPIRATION_MS:864000000}
