@@ -11,7 +11,6 @@ import com.nextdate.backend.experience.domain.Profile;
 import com.nextdate.backend.experience.domain.ProfileRepository;
 import com.nextdate.backend.experience.domain.SharedExperience;
 import com.nextdate.backend.experience.domain.SharedExperienceRepository;
-import com.nextdate.backend.experience.domain.TransportType;
 import com.nextdate.backend.logistics.domain.AiConciergeClient;
 import java.util.Collections;
 import java.util.List;
@@ -75,7 +74,8 @@ class RecommendItineraryServiceTest {
             }
           ]
         }
-        """.formatted(placeId);
+        """
+            .formatted(placeId);
 
     Itinerary expectedItinerary =
         Itinerary.builder().id(UUID.randomUUID()).title("Cita Romántica").build();
@@ -97,7 +97,8 @@ class RecommendItineraryServiceTest {
     verify(profileRepository, times(1)).findByUserId(userId);
     verify(sharedExperienceRepository, times(1)).findAllActive();
     verify(aiConciergeClient, times(1)).generateItineraryJson(profile, activeExperiences, prompt);
-    verify(createItineraryUseCase, times(1)).create(any(CreateItineraryUseCase.CreateCommand.class));
+    verify(createItineraryUseCase, times(1))
+        .create(any(CreateItineraryUseCase.CreateCommand.class));
   }
 
   @Test
@@ -140,8 +141,7 @@ class RecommendItineraryServiceTest {
     // Act & Assert
     RuntimeException exception =
         assertThrows(
-            RuntimeException.class,
-            () -> recommendItineraryService.recommend(userId, prompt));
+            RuntimeException.class, () -> recommendItineraryService.recommend(userId, prompt));
 
     assertTrue(exception.getMessage().contains("Error al procesar recomendación de la IA"));
     verify(aiConciergeClient, times(1)).generateItineraryJson(any(), any(), any());

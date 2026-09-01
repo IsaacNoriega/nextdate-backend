@@ -10,12 +10,18 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class RecommendationGraphQLController {
   private final RecommendItineraryUseCase recommendItineraryUseCase;
+
   public RecommendationGraphQLController(RecommendItineraryUseCase recommendItineraryUseCase) {
     this.recommendItineraryUseCase = recommendItineraryUseCase;
   }
+
   @MutationMapping
-  public Itinerary recommendItinerary(@Argument RecommendItineraryInput input) {
+  public Itinerary recommendItinerary(
+      @Argument RecommendItineraryInput input, graphql.GraphQLContext context) {
+    com.nextdate.backend.auth.infrastructure.security.SecurityUtils.validateUserOwnership(
+        input.userId(), context);
     return recommendItineraryUseCase.recommend(input.userId(), input.prompt());
   }
+
   public record RecommendItineraryInput(UUID userId, String prompt) {}
 }

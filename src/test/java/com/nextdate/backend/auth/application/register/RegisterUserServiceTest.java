@@ -75,12 +75,7 @@ class RegisterUserServiceTest {
     RegisterUserCommand command = new RegisterUserCommand(email, "password123");
 
     User existingUser =
-        User.builder()
-            .id(UUID.randomUUID())
-            .email(email)
-            .passwordHash("hash")
-            .active(true)
-            .build();
+        User.builder().id(UUID.randomUUID()).email(email).passwordHash("hash").active(true).build();
 
     when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
 

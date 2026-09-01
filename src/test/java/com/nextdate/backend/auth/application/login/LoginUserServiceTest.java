@@ -1,7 +1,6 @@
 package com.nextdate.backend.auth.application.login;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import com.nextdate.backend.auth.application.login.LoginUserUseCase.LoginCommand;
@@ -46,12 +45,7 @@ class LoginUserServiceTest {
 
     LoginCommand command = new LoginCommand(email, rawPassword);
     User user =
-        User.builder()
-            .id(userId)
-            .email(email)
-            .passwordHash(encodedPassword)
-            .active(true)
-            .build();
+        User.builder().id(userId).email(email).passwordHash(encodedPassword).active(true).build();
 
     when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
     when(passwordEncoder.matches(rawPassword, encodedPassword)).thenReturn(true);

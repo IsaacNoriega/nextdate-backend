@@ -4,6 +4,6 @@ import com.nextdate.backend.experience.domain.Place;
 import java.util.List;
 
 public interface OptimizeRouteUseCase {
-    
-    List<Place> optimizeRoute(List<Place> places );
+
+  List<Place> optimizeRoute(List<Place> places);
 }

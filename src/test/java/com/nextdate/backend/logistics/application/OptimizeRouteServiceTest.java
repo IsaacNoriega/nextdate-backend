@@ -25,11 +25,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class OptimizeRouteServiceTest {
 
-  @Mock
-  private SpatialService spatialService;
+  @Mock private SpatialService spatialService;
 
-  @InjectMocks
-  private OptimizeRouteService optimizeRouteService;
+  @InjectMocks private OptimizeRouteService optimizeRouteService;
 
   private GeometryFactory geometryFactory;
 
@@ -42,7 +40,8 @@ class OptimizeRouteServiceTest {
   void shouldReturnSameListWhenEmptyOrSinglePlace() {
     // Escenario vacío
     assertNull(optimizeRouteService.optimizeRoute(null));
-    assertEquals(Collections.emptyList(), optimizeRouteService.optimizeRoute(Collections.emptyList()));
+    assertEquals(
+        Collections.emptyList(), optimizeRouteService.optimizeRoute(Collections.emptyList()));
 
     // Escenario un solo elemento
     Place place = createMockPlace(0.0, 0.0);
@@ -64,11 +63,14 @@ class OptimizeRouteServiceTest {
     List<Place> places = List.of(placeA, placeB, placeC);
 
     // Mockear distancias desde A
-    when(spatialService.calculateDistanceInMeters(placeA.getLocation(), placeB.getLocation())).thenReturn(1000.0);
-    when(spatialService.calculateDistanceInMeters(placeA.getLocation(), placeC.getLocation())).thenReturn(100.0);
+    when(spatialService.calculateDistanceInMeters(placeA.getLocation(), placeB.getLocation()))
+        .thenReturn(1000.0);
+    when(spatialService.calculateDistanceInMeters(placeA.getLocation(), placeC.getLocation()))
+        .thenReturn(100.0);
 
     // Mockear distancias desde C (el más cercano a A se vuelve el actual)
-    when(spatialService.calculateDistanceInMeters(placeC.getLocation(), placeB.getLocation())).thenReturn(900.0);
+    when(spatialService.calculateDistanceInMeters(placeC.getLocation(), placeB.getLocation()))
+        .thenReturn(900.0);
 
     // Ejecutar ordenación (debe comenzar en A, buscar el más cercano -> C, y luego B)
     List<Place> optimized = optimizeRouteService.optimizeRoute(places);

@@ -68,7 +68,8 @@ class CreateItineraryServiceTest {
   }
 
   @Test
-  @DisplayName("5. Boundary & Default Values: Debería aplicar valores por defecto en duración (60 min) y transporte (NONE)")
+  @DisplayName(
+      "5. Boundary & Default Values: Debería aplicar valores por defecto en duración (60 min) y transporte (NONE)")
   void deberiaAplicarValoresPorDefectoEnItems() {
     // Arrange
     UUID userId = UUID.randomUUID();
@@ -82,7 +83,8 @@ class CreateItineraryServiceTest {
         new CreateItineraryUseCase.CreateCommand(
             userId, "Itinerario Test", "Desc", 0.0, true, List.of(itemCommand));
 
-    when(placeRepository.findById(placeId)).thenReturn(Optional.of(Place.builder().id(placeId).build()));
+    when(placeRepository.findById(placeId))
+        .thenReturn(Optional.of(Place.builder().id(placeId).build()));
     when(itineraryRepository.save(any(Itinerary.class)))
         .thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -90,17 +92,25 @@ class CreateItineraryServiceTest {
     Itinerary result = createItineraryService.create(createCommand);
 
     // Assert
-    assertEquals(60, result.getItems().get(0).getDurationInMinutes(), "Duración debe ser 60 min por defecto");
-    assertEquals(TransportType.NONE, result.getItems().get(0).getTransportToNext(), "Transporte debe ser NONE por defecto");
+    assertEquals(
+        60,
+        result.getItems().get(0).getDurationInMinutes(),
+        "Duración debe ser 60 min por defecto");
+    assertEquals(
+        TransportType.NONE,
+        result.getItems().get(0).getTransportToNext(),
+        "Transporte debe ser NONE por defecto");
   }
 
   @Test
-  @DisplayName("3 & 4. Negativo/Excepción: Debería lanzar IllegalArgumentException si un PlaceId no existe")
+  @DisplayName(
+      "3 & 4. Negativo/Excepción: Debería lanzar IllegalArgumentException si un PlaceId no existe")
   void deberiaLanzarExcepcionCuandoLugarNoExiste() {
     // Arrange
     UUID placeIdInexistente = UUID.randomUUID();
     CreateItineraryUseCase.CreateItemCommand itemCommand =
-        new CreateItineraryUseCase.CreateItemCommand(placeIdInexistente, 1, 60, "Notas", TransportType.NONE, 0);
+        new CreateItineraryUseCase.CreateItemCommand(
+            placeIdInexistente, 1, 60, "Notas", TransportType.NONE, 0);
 
     CreateItineraryUseCase.CreateCommand createCommand =
         new CreateItineraryUseCase.CreateCommand(
@@ -111,10 +121,10 @@ class CreateItineraryServiceTest {
     // Act & Assert
     IllegalArgumentException exception =
         assertThrows(
-            IllegalArgumentException.class,
-            () -> createItineraryService.create(createCommand));
+            IllegalArgumentException.class, () -> createItineraryService.create(createCommand));
 
-    assertTrue(exception.getMessage().contains("Lugar no encontrado con ID: " + placeIdInexistente));
+    assertTrue(
+        exception.getMessage().contains("Lugar no encontrado con ID: " + placeIdInexistente));
     verify(itineraryRepository, never()).save(any());
   }
 }
