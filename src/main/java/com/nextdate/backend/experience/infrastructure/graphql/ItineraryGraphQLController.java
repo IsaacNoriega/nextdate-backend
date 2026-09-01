@@ -10,11 +10,14 @@ import com.nextdate.backend.experience.domain.Place;
 import com.nextdate.backend.experience.domain.PlaceRepository;
 import com.nextdate.backend.experience.domain.TransportType;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -81,10 +84,15 @@ public class ItineraryGraphQLController {
     return createItineraryUseCase.create(command);
   }
 
-  // Place del item del itinerario en SchemaMapping (al nivel de la clase, no anidado)
-  @SchemaMapping(typeName = "ItineraryItem", field = "place")
-  public Place place(ItineraryItem item) {
-    return placeRepository.findById(item.getPlaceId()).orElse(null);
+  // BatchMapping para resolver todos los lugares de los items en una sola consulta por lote
+  @BatchMapping(typeName = "ItineraryItem", field = "place")
+  public Map<ItineraryItem, Place> place(List<ItineraryItem> items) {
+    Set<UUID> placeIds = items.stream().map(ItineraryItem::getPlaceId).collect(Collectors.toSet());
+    Map<UUID, Place> placeMap =
+        placeRepository.findAllById(placeIds).stream()
+            .collect(Collectors.toMap(Place::getId, p -> p));
+    return items.stream()
+        .collect(Collectors.toMap(item -> item, item -> placeMap.get(item.getPlaceId())));
   }
 
   public record CreateItineraryInput(

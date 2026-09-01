@@ -7,11 +7,15 @@ import com.nextdate.backend.experience.domain.Itinerary;
 import com.nextdate.backend.experience.domain.ItineraryRepository;
 import com.nextdate.backend.experience.domain.SharedExperience;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.BatchMapping;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -59,9 +63,20 @@ public class SharedExperienceGraphQLController {
     return shareExperienceUseCase.share(command);
   }
 
-  @SchemaMapping(typeName = "SharedExperience", field = "itinerary")
-  public Itinerary itinerary(SharedExperience experience) {
-    return itineraryRepository.findById(experience.getItineraryId()).orElse(null);
+  // BatchMapping para resolver los itinerarios de todas las experiencias compartidas de forma
+  // conjunta
+  @BatchMapping(typeName = "SharedExperience", field = "itinerary")
+  public Map<SharedExperience, Itinerary> itinerary(List<SharedExperience> experiences) {
+    Set<UUID> itineraryIds =
+        experiences.stream()
+            .map(SharedExperience::getItineraryId)
+            .filter(Objects::nonNull)
+            .collect(Collectors.toSet());
+    Map<UUID, Itinerary> itineraryMap =
+        itineraryRepository.findAllById(itineraryIds).stream()
+            .collect(Collectors.toMap(Itinerary::getId, itin -> itin));
+    return experiences.stream()
+        .collect(Collectors.toMap(exp -> exp, exp -> itineraryMap.get(exp.getItineraryId())));
   }
 
   public record ShareExperienceInput(
