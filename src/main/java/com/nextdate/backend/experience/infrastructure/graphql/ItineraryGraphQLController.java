@@ -35,7 +35,10 @@ public class ItineraryGraphQLController {
 
   // Itineraries por ID de usuario
   @QueryMapping
-  public List<Itinerary> itinerariesByUserId(@Argument UUID userId) {
+  public List<Itinerary> itinerariesByUserId(
+      @Argument UUID userId, graphql.GraphQLContext context) {
+    com.nextdate.backend.auth.infrastructure.security.SecurityUtils.validateUserOwnership(
+        userId, context);
     return getItinerariesUseCase.getByUserId(userId);
   }
 
@@ -46,7 +49,11 @@ public class ItineraryGraphQLController {
   }
 
   @MutationMapping
-  public Itinerary createItinerary(@Argument CreateItineraryInput input) {
+  public Itinerary createItinerary(
+      @Argument CreateItineraryInput input, graphql.GraphQLContext context) {
+    com.nextdate.backend.auth.infrastructure.security.SecurityUtils.validateUserOwnership(
+        input.userId(), context);
+
     List<CreateItemCommand> itemCommands =
         input.items().stream()
             .map(
