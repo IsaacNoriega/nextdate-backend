@@ -10,5 +10,7 @@ public interface ItineraryRepository {
 
   Optional<Itinerary> findById(UUID id);
 
+  List<Itinerary> findAllById(Iterable<UUID> ids);
+
   List<Itinerary> findByUserId(UUID userId);
 }

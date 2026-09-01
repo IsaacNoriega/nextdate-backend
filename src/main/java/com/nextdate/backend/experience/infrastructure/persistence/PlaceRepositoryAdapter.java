@@ -30,6 +30,11 @@ public class PlaceRepositoryAdapter implements PlaceRepository {
   }
 
   @Override
+  public List<Place> findAllById(Iterable<UUID> ids) {
+    return jpaRepository.findAllById(ids).stream().map(this::toDomain).toList();
+  }
+
+  @Override
   public List<Place> findNearby(
       double latitude, double longitude, double radiusInKm, PlaceCategory category) {
     double radiusInMeters = radiusInKm * 1000;

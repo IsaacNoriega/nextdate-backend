@@ -35,6 +35,12 @@ public class ItineraryRepositoryAdapter implements ItineraryRepository {
     return itineraryJpaRepository.findById(id).map(this::toDomain);
   }
 
+  // Buscar múltiples itinerarios por lista de IDs
+  @Override
+  public List<Itinerary> findAllById(Iterable<UUID> ids) {
+    return itineraryJpaRepository.findAllById(ids).stream().map(this::toDomain).toList();
+  }
+
   // Buscar todos los itinerarios de un usuario específico
   @Override
   public List<Itinerary> findByUserId(UUID userId) {

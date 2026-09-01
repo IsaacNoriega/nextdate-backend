@@ -9,6 +9,8 @@ public interface PlaceRepository {
 
   Optional<Place> findById(UUID id);
 
+  List<Place> findAllById(Iterable<UUID> ids);
+
   List<Place> findNearby(
       double latitude, double longitude, double radiusInKm, PlaceCategory category);
 }
