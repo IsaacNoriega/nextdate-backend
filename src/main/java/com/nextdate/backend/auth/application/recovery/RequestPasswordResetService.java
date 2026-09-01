@@ -40,11 +40,7 @@ public class RequestPasswordResetService implements RequestPasswordResetUseCase 
             token, expires); // actualizar usuario con token y fecha de expiracion
     userRepository.save(updateUser); // guardar usuario
 
-    log.info("--------------------------------------------------");
-    log.info("SOLICITUD DE RECUPERACIÓN DE CONTRASEÑA");
-    log.info("Usuario: {}", email);
-    log.info("Token: {}", token);
-    log.info("Expiración: {}", expires);
-    log.info("--------------------------------------------------");
+    log.info("Solicitud de recuperación de contraseña recibida para: {}", email);
+    log.debug("Token de recuperación generado: {}, expiración: {}", token, expires);
   }
 }

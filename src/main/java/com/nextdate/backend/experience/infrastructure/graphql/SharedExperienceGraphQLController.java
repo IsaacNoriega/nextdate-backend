@@ -41,7 +41,11 @@ public class SharedExperienceGraphQLController {
   }
 
   @MutationMapping
-  public SharedExperience shareExperience(@Argument ShareExperienceInput input) {
+  public SharedExperience shareExperience(
+      @Argument ShareExperienceInput input, graphql.GraphQLContext context) {
+    com.nextdate.backend.auth.infrastructure.security.SecurityUtils.validateUserOwnership(
+        input.userId(), context);
+
     ShareCommand command =
         new ShareCommand(
             input.userId(),

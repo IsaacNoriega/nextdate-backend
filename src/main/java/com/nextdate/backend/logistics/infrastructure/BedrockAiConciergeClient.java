@@ -131,7 +131,8 @@ public class BedrockAiConciergeClient implements AiConciergeClient {
   }
 
   private String parseTextFromClaudeResponse(String responseJson) {
-    // Claude 3 devuelve un JSON que contiene: "content": [{"type": "text", "text": "JSON_GENERADO"}]
+    // Claude 3 devuelve un JSON que contiene: "content": [{"type": "text", "text":
+    // "JSON_GENERADO"}]
     // Un parseo manual simple de strings para extraer el JSON puro sin meter librerías complejas:
     int startIdx = responseJson.indexOf("\"text\":\"");
     if (startIdx == -1) {
@@ -144,10 +145,6 @@ public class BedrockAiConciergeClient implements AiConciergeClient {
     }
     String escapedJson = responseJson.substring(startIdx, endIdx);
     // Remover escapes de comillas y saltos de línea devueltos por el JSON de AWS
-    return escapedJson
-        .replace("\\\"", "\"")
-        .replace("\\n", "\n")
-        .replace("\\t", " ")
-        .trim();
+    return escapedJson.replace("\\\"", "\"").replace("\\n", "\n").replace("\\t", " ").trim();
   }
 }

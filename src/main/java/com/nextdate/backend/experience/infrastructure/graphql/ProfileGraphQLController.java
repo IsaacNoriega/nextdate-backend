@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -55,7 +54,10 @@ public class ProfileGraphQLController {
 
   // CREATE PROFILE
   @MutationMapping
-  public Profile createProfile(@Argument CreateProfileInput input) {
+  public Profile createProfile(@Argument CreateProfileInput input, graphql.GraphQLContext context) {
+    com.nextdate.backend.auth.infrastructure.security.SecurityUtils.validateUserOwnership(
+        input.userId(), context);
+
     CreateCommand command =
         new CreateCommand(
             input.userId(),
@@ -74,7 +76,10 @@ public class ProfileGraphQLController {
 
   // UPDATE PROFILE
   @MutationMapping
-  public Profile updateProfile(@Argument UpdateProfileInput input) {
+  public Profile updateProfile(@Argument UpdateProfileInput input, graphql.GraphQLContext context) {
+    com.nextdate.backend.auth.infrastructure.security.SecurityUtils.validateUserOwnership(
+        input.userId(), context);
+
     LocalDate birthdate = input.birthdate() != null ? LocalDate.parse(input.birthdate()) : null;
 
     UpdateCommand command =

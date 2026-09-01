@@ -34,12 +34,7 @@ class RequestPasswordResetServiceTest {
     // Arrange
     String email = "usuario@nextdate.com";
     User existingUser =
-        User.builder()
-            .id(UUID.randomUUID())
-            .email(email)
-            .passwordHash("hash")
-            .active(true)
-            .build();
+        User.builder().id(UUID.randomUUID()).email(email).passwordHash("hash").active(true).build();
 
     when(userRepository.findByEmail(email)).thenReturn(Optional.of(existingUser));
 
@@ -60,7 +55,8 @@ class RequestPasswordResetServiceTest {
   }
 
   @Test
-  @DisplayName("3 & 4. Negativo/Excepción: Debería lanzar IllegalArgumentException cuando el usuario no existe")
+  @DisplayName(
+      "3 & 4. Negativo/Excepción: Debería lanzar IllegalArgumentException cuando el usuario no existe")
   void deberiaLanzarExcepcionCuandoUsuarioNoExiste() {
     // Arrange
     String email = "desconocido@nextdate.com";
@@ -69,8 +65,7 @@ class RequestPasswordResetServiceTest {
     // Act & Assert
     IllegalArgumentException exception =
         assertThrows(
-            IllegalArgumentException.class,
-            () -> requestPasswordResetService.requestReset(email));
+            IllegalArgumentException.class, () -> requestPasswordResetService.requestReset(email));
 
     assertEquals("Usuario no encontrado", exception.getMessage());
     verify(userRepository, times(1)).findByEmail(email);

@@ -33,7 +33,8 @@ class ResetPasswordServiceTest {
   }
 
   @Test
-  @DisplayName("1. Happy Path: Debería reestablecer la contraseña si el token es válido y no ha expirado")
+  @DisplayName(
+      "1. Happy Path: Debería reestablecer la contraseña si el token es válido y no ha expirado")
   void deberiaRestablecerContrasenaCorrectamente() {
     // Arrange
     String validToken = "valid-reset-token-123";
@@ -71,7 +72,8 @@ class ResetPasswordServiceTest {
   }
 
   @Test
-  @DisplayName("3 & 4. Negativo/Excepción: Debería lanzar IllegalArgumentException cuando el token no existe")
+  @DisplayName(
+      "3 & 4. Negativo/Excepción: Debería lanzar IllegalArgumentException cuando el token no existe")
   void deberiaLanzarExcepcionCuandoTokenNoExiste() {
     // Arrange
     String invalidToken = "token-inexistente";
@@ -82,16 +84,15 @@ class ResetPasswordServiceTest {
 
     // Act & Assert
     IllegalArgumentException exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> resetPasswordService.reset(command));
+        assertThrows(IllegalArgumentException.class, () -> resetPasswordService.reset(command));
 
     assertEquals("Token invalido o expirado", exception.getMessage());
     verify(userRepository, never()).save(any());
   }
 
   @Test
-  @DisplayName("3, 4 & 5. Negativo/Excepción: Debería lanzar IllegalArgumentException cuando el token ya expiró")
+  @DisplayName(
+      "3, 4 & 5. Negativo/Excepción: Debería lanzar IllegalArgumentException cuando el token ya expiró")
   void deberiaLanzarExcepcionCuandoTokenHaExpirado() {
     // Arrange
     String expiredToken = "expired-token-123";
@@ -111,9 +112,7 @@ class ResetPasswordServiceTest {
 
     // Act & Assert
     IllegalArgumentException exception =
-        assertThrows(
-            IllegalArgumentException.class,
-            () -> resetPasswordService.reset(command));
+        assertThrows(IllegalArgumentException.class, () -> resetPasswordService.reset(command));
 
     assertEquals("Token expirado", exception.getMessage());
     verify(passwordEncoder, never()).encode(any());
