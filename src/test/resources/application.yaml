@@ -16,14 +16,11 @@ spring:
     graphiql:
       enabled: false
 
-aws:
-  bedrock:
-    mock: true
-    model-id: anthropic.claude-3-haiku-20240307-v1:0
-    region: us-east-1
-  credentials:
-    access-key: test-access-key
-    secret-key: test-secret-key
+gemini:
+  api-key: test-gemini-key
+  model: gemini-1.5-flash
+  mock: true
+  base-url: https://generativelanguage.googleapis.com
 
 jwt:
   secret: test_jwt_secret_with_minimum_64_characters_for_hmac512_verification_in_tests

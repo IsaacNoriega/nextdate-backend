@@ -20,14 +20,11 @@ spring:
     cors:
       allowed-origins: "https://studio.apollographql.com,http://localhost:8080,http://localhost:8081,http://localhost:19006,http://localhost:3000"
 
-aws:
-  bedrock:
-    mock: ${AWS_BEDROCK_MOCK:true}
-    model-id: ${AWS_BEDROCK_MODEL_ID:anthropic.claude-3-haiku-20240307-v1:0}
-    region: ${AWS_REGION:us-east-1}
-  credentials:
-    access-key: ${AWS_ACCESS_KEY_ID:}
-    secret-key: ${AWS_SECRET_ACCESS_KEY:}
+gemini:
+  api-key: ${GEMINI_API_KEY:}
+  model: ${GEMINI_MODEL:gemini-1.5-flash}
+  mock: ${GEMINI_MOCK:true}
+  base-url: ${GEMINI_BASE_URL:https://generativelanguage.googleapis.com}
 
 jwt:
   secret: ${JWT_SECRET:nextdate_super_secret_key_development_only_minimum_64_characters_long_for_security_compliance}

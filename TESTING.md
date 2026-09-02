@@ -41,9 +41,14 @@ Este documento detalla la estructura, cobertura y forma de ejecución de las pru
 ### 2. Módulo de Logística e IA (`com.nextdate.backend.logistics`)
 
 #### 🤖 `RecommendItineraryServiceTest`
-* **`deberiaRecomendarEItinerarioCorrectamente()`** *(Happy Path)*: Simula la respuesta JSON del motor de IA (AWS Bedrock / Concierge) y valida la creación del itinerario.
+* **`deberiaRecomendarEItinerarioCorrectamente()`** *(Happy Path)*: Simula la respuesta JSON del motor de IA (Google Gemini / Concierge) y valida la creación del itinerario.
 * **`deberiaLanzarExcepcionCuandoPerfilNoExiste()`** *(Recurso no encontrado)*: Falla si el perfil del usuario no existe antes de invocar a la IA.
 * **`deberiaLanzarRuntimeExceptionCuandoJsonEsInvalido()`** *(Manejo de Excepciones)*: Captura respuestas malformadas de la IA y lanza una excepción descriptiva.
+
+#### 🧠 `GeminiAiConciergeClientTest`
+* **`shouldParseJsonFromGeminiResponse()`** *(Happy Path)*: Valida la extracción tipada del JSON estructurado devuelto por la API de Google Gemini.
+* **`shouldCleanMarkdownFencesIfPresent()`** *(Sanitización)*: Comprueba la eliminación automática de bloques ` ```json ` si el modelo los incluye.
+* **`shouldThrowWhenApiKeyIsMissing()`** *(Validación)*: Lanza excepción preventiva si `GEMINI_API_KEY` no está configurada.
 
 #### ⏱️ `EstimateTravelTimeServiceTest`
 * **Pruebas por transporte (`WALKING`, `DRIVING`, `TRANSIT`, `CYCLING`)**: Valida el cálculo exacto de tiempos en minutos según velocidades estimadas.
