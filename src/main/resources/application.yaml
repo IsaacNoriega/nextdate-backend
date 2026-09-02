@@ -32,3 +32,16 @@ aws:
 jwt:
   secret: ${JWT_SECRET:nextdate_super_secret_key_development_only_minimum_64_characters_long_for_security_compliance}
   expiration-ms: ${JWT_EXPIRATION_MS:864000000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+
+logging:
+  pattern:
+    level: "%5p [correlationId=%X{correlationId:-none}]"
