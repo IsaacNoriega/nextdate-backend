@@ -28,7 +28,7 @@ class GeminiAiConciergeClientTest {
     GeminiAiConciergeClient client =
         new GeminiAiConciergeClient(
             "test-key",
-            "gemini-1.5-flash",
+            "gemini-3.6-flash",
             "https://generativelanguage.googleapis.com",
             objectMapper,
             builder);
@@ -73,7 +73,7 @@ class GeminiAiConciergeClientTest {
     GeminiAiConciergeClient client =
         new GeminiAiConciergeClient(
             "test-key",
-            "gemini-1.5-flash",
+            "gemini-3.6-flash",
             "https://generativelanguage.googleapis.com",
             objectMapper,
             builder);
@@ -108,7 +108,7 @@ class GeminiAiConciergeClientTest {
     GeminiAiConciergeClient client =
         new GeminiAiConciergeClient(
             "",
-            "gemini-1.5-flash",
+            "gemini-3.6-flash",
             "https://generativelanguage.googleapis.com",
             objectMapper,
             builder);

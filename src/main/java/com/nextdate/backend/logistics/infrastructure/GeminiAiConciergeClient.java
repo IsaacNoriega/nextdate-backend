@@ -24,7 +24,7 @@ public class GeminiAiConciergeClient implements AiConciergeClient {
 
   public GeminiAiConciergeClient(
       @Value("${gemini.api-key:}") String apiKey,
-      @Value("${gemini.model:gemini-1.5-flash}") String model,
+      @Value("${gemini.model:gemini-3.6-flash}") String model,
       @Value("${gemini.base-url:https://generativelanguage.googleapis.com}") String baseUrl,
       ObjectMapper objectMapper,
       RestClient.Builder restClientBuilder) {
@@ -82,13 +82,16 @@ public class GeminiAiConciergeClient implements AiConciergeClient {
 
     String userMessage =
         String.format(
-            "User Profile:\n- Username: %s\n- Diet: %s\n- Price Preference: %s\n- Interests: %s\n\n"
+            "User Profile:\n- Username: %s\n- Diet: %s\n- Price Preference: %s\n- Interests: %s\n"
+                + "- Current Location: Latitude %.4f, Longitude %.4f (Please recommend places located strictly in or around this geographical metropolitan zone, e.g. Guadalajara / Zapopan / Jalisco area, unless user prompt explicitly specifies another city).\n\n"
                 + "Shared Community Experiences (RAG Database Context):\n%s\n\n"
                 + "Request Situation: %s",
             profile.getUsername(),
             profile.getDietaryPreference(),
             profile.getPreferredPriceRange(),
             profile.getInterests(),
+            profile.getLatitude(),
+            profile.getLongitude(),
             experiencesContext,
             userPrompt);
 

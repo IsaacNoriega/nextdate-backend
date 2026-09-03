@@ -22,8 +22,8 @@ spring:
 
 gemini:
   api-key: ${GEMINI_API_KEY:}
-  model: ${GEMINI_MODEL:gemini-1.5-flash}
-  mock: ${GEMINI_MOCK:true}
+  model: ${GEMINI_MODEL:gemini-3.6-flash}
+  mock: ${GEMINI_MOCK:false}
   base-url: ${GEMINI_BASE_URL:https://generativelanguage.googleapis.com}
 
 jwt:

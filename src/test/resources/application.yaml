@@ -17,9 +17,9 @@ spring:
       enabled: false
 
 gemini:
-  api-key: test-gemini-key
-  model: gemini-1.5-flash
-  mock: true
+  api-key: test-api-key
+  model: gemini-3.6-flash
+  mock: false
   base-url: https://generativelanguage.googleapis.com
 
 jwt:
