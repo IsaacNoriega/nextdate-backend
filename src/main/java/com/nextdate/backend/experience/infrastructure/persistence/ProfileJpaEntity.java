@@ -51,6 +51,9 @@ public class ProfileJpaEntity {
   @Column(columnDefinition = "TEXT")
   private String bio;
 
+  @Column(name = "avatar_url", columnDefinition = "TEXT")
+  private String avatarUrl;
+
   @Column(columnDefinition = "geometry(Point, 4326)")
   private Point location;
 

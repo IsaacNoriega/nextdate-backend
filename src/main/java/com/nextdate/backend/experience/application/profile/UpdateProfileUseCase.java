@@ -20,6 +20,7 @@ public interface UpdateProfileUseCase {
       LocalDate birthdate,
       Gender gender,
       String bio,
+      String avatarUrl,
       Double latitude,
       Double longitude,
       DietaryPreference dietaryPreference,

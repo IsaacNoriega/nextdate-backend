@@ -44,6 +44,8 @@ public class UpdateProfileService implements UpdateProfileUseCase {
         command.birthdate() != null ? command.birthdate() : profile.getBirthdate();
     Gender gender = command.gender() != null ? command.gender() : profile.getGender();
     String bio = command.bio() != null ? command.bio() : profile.getBio();
+    String avatarUrl =
+        command.avatarUrl() != null ? command.avatarUrl() : profile.getAvatarUrl();
 
     Point location =
         (command.longitude() != null && command.latitude() != null)
@@ -72,6 +74,7 @@ public class UpdateProfileService implements UpdateProfileUseCase {
             .birthdate(birthdate)
             .gender(gender)
             .bio(bio)
+            .avatarUrl(avatarUrl)
             .location(location)
             .dietaryPreference(dietary)
             .preferredPriceRange(price)

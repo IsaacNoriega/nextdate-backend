@@ -54,6 +54,7 @@ public class CreateProfileService implements CreateProfileUseCase {
             .birthdate(command.birthdate())
             .gender(command.gender())
             .bio(command.bio())
+            .avatarUrl(command.avatarUrl())
             .location(location)
             .active(true)
             .dietaryPreference(dietary)

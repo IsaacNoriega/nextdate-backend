@@ -59,6 +59,7 @@ type Profile {
     birthdate: String!
     gender: Gender!
     bio: String
+    avatarUrl: String
     latitude: Float!
     longitude: Float!
     active: Boolean!
@@ -75,6 +76,7 @@ input CreateProfileInput {
     birthdate: String! #Formato: "1998-10-20"
     gender: Gender!
     bio: String
+    avatarUrl: String
     latitude: Float!
     longitude: Float!
     dietaryPreference: DietaryPreference!
@@ -89,6 +91,7 @@ input UpdateProfileInput {
     birthdate: String
     gender: Gender
     bio: String
+    avatarUrl: String
     latitude: Float
     longitude: Float
     dietaryPreference: DietaryPreference

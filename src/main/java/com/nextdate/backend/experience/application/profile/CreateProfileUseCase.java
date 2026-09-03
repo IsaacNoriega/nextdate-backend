@@ -19,6 +19,7 @@ public interface CreateProfileUseCase {
       LocalDate birthdate,
       Gender gender,
       String bio,
+      String avatarUrl,
       double latitude,
       double longitude,
       DietaryPreference dietaryPreference,

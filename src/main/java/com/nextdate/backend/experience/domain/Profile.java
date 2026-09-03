@@ -18,6 +18,7 @@ public class Profile { // DTO para manejo de datos
   private final LocalDate birthdate;
   private final Gender gender;
   private final String bio;
+  private final String avatarUrl;
   private final Point location;
   private final Boolean active;
 
@@ -41,6 +42,7 @@ public class Profile { // DTO para manejo de datos
         .birthdate(this.birthdate)
         .gender(this.gender)
         .bio(this.bio)
+        .avatarUrl(this.avatarUrl)
         .location(this.location)
         .active(false)
         .dietaryPreference(this.dietaryPreference)
