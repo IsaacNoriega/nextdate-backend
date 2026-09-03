@@ -216,7 +216,8 @@ input CreateItineraryItemInput {
 type SharedExperience {
     id: ID!
     userId: ID!
-    itinerary: Itinerary!
+    itineraryId: ID
+    itinerary: Itinerary
     title: String!
     description: String
     tips: String
@@ -228,7 +229,7 @@ type SharedExperience {
 
 input ShareExperienceInput {
     userId: ID!
-    itineraryId: ID!
+    itineraryId: ID
     title: String!
     description: String
     tips: String

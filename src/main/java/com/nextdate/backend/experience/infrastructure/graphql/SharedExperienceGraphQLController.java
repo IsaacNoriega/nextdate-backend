@@ -73,10 +73,18 @@ public class SharedExperienceGraphQLController {
             .filter(Objects::nonNull)
             .collect(Collectors.toSet());
     Map<UUID, Itinerary> itineraryMap =
-        itineraryRepository.findAllById(itineraryIds).stream()
-            .collect(Collectors.toMap(Itinerary::getId, itin -> itin));
-    return experiences.stream()
-        .collect(Collectors.toMap(exp -> exp, exp -> itineraryMap.get(exp.getItineraryId())));
+        itineraryIds.isEmpty()
+            ? Map.of()
+            : itineraryRepository.findAllById(itineraryIds).stream()
+                .collect(Collectors.toMap(Itinerary::getId, itin -> itin));
+
+    Map<SharedExperience, Itinerary> result = new java.util.HashMap<>();
+    for (SharedExperience exp : experiences) {
+      result.put(
+          exp,
+          exp.getItineraryId() != null ? itineraryMap.get(exp.getItineraryId()) : null);
+    }
+    return result;
   }
 
   public record ShareExperienceInput(

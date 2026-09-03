@@ -32,7 +32,7 @@ public class SharedExperienceJpaEntity {
   @Column(name = "user_id", nullable = false)
   private UUID userId;
 
-  @Column(name = "itinerary_id", nullable = false)
+  @Column(name = "itinerary_id")
   private UUID itineraryId;
 
   @Column(nullable = false)
@@ -60,6 +60,6 @@ public class SharedExperienceJpaEntity {
   @CollectionTable(
       name = "shared_experience_images",
       joinColumns = @JoinColumn(name = "shared_experience_id"))
-  @Column(name = "image_url", nullable = false)
+  @Column(name = "image_url", columnDefinition = "TEXT", nullable = false)
   private List<String> imageUrls;
 }

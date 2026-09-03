@@ -22,13 +22,15 @@ public class ShareExperienceService implements ShareExperienceUseCase {
 
   @Override
   public SharedExperience share(ShareCommand command) {
-    // 1. Validar que el itinerario exista
-    itineraryRepository
-        .findById(command.itineraryId())
-        .orElseThrow(
-            () ->
-                new IllegalArgumentException(
-                    "Itinerario no encontrado con ID: " + command.itineraryId()));
+    // 1. Validar que el itinerario exista si se proporcionó uno
+    if (command.itineraryId() != null) {
+      itineraryRepository
+          .findById(command.itineraryId())
+          .orElseThrow(
+              () ->
+                  new IllegalArgumentException(
+                      "Itinerario no encontrado con ID: " + command.itineraryId()));
+    }
 
     // 2. Construir la experiencia compartida
     SharedExperience sharedExperience =
