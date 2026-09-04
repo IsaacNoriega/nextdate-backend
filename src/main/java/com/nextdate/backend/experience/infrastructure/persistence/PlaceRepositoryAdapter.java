@@ -45,6 +45,16 @@ public class PlaceRepositoryAdapter implements PlaceRepository {
         .toList();
   }
 
+  @Override
+  public Optional<Place> findNearbyMatchingName(
+      String name, double latitude, double longitude, double radiusInMeters) {
+    if (name == null || name.isBlank()) {
+      return Optional.empty();
+    }
+    return jpaRepository.findNearbyMatchingName(longitude, latitude, radiusInMeters, name.trim())
+        .map(this::toDomain);
+  }
+
   private Place toDomain(PlaceJpaEntity entity) {
     return Place.builder()
         .id(entity.getId())

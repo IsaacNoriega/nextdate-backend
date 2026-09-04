@@ -13,4 +13,7 @@ public interface PlaceRepository {
 
   List<Place> findNearby(
       double latitude, double longitude, double radiusInKm, PlaceCategory category);
+
+  Optional<Place> findNearbyMatchingName(
+      String name, double latitude, double longitude, double radiusInMeters);
 }

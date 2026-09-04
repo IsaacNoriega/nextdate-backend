@@ -21,7 +21,15 @@ public class CreatePlaceService implements CreatePlaceUseCase {
     this.geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
   }
 
+  @Override
   public Place create(CreateCommand command) {
+    // 1. Deduplicación inteligente: buscar si ya existe un lugar activo con ese nombre en un radio de 100m
+    java.util.Optional<Place> existing =
+        placeRepository.findNearbyMatchingName(
+            command.name(), command.latitude(), command.longitude(), 100.0);
+    if (existing.isPresent()) {
+      return existing.get();
+    }
 
     Point location =
         geometryFactory.createPoint(new Coordinate(command.longitude(), command.latitude()));
